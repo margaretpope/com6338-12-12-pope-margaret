@@ -25,17 +25,48 @@ class Word {
     this.correctLetters = []
   }
 
-  // implement the guessLetter function:
-  // guessLetter(letter) {}
+  guessLetter(letter) {
+    if (this.word.includes(letter)) {
+      for (let i = 0; i < this.word.length; i++) {
+        if (this.word[i] === letter) {
+          this.displayWord = this.displayWord.substring(0, i) + letter + this.displayWord.substring(i + 1)
+          this.correctLetters.push(letter)
+        } 
+      }    
+    } else {
+      this.remainingGuesses--
+      this.incorrectLetters.push(letter)
+    }
+  }
 
-  // implement the updateScreen function:
-  // updateScreen() {}
+  updateScreen() {
+    const remainingGuessesEl = document.getElementById('remaining-guesses')
+    const incorrectLettersEl = document.getElementById('incorrect-letters')
+    const wordToGuessEl = document.getElementById('word-to-guess')
+    remainingGuessesEl.textContent = this.remainingGuesses
+    incorrectLettersEl.textContent = this.incorrectLetters
+    wordToGuessEl.textContent = this.displayWord 
+  }
 
-  // implement the isGameOver function:
-  // isGameOver() {}
+  isGameOver() {
+    if (this.remainingGuesses <= 0) {
+      return true
+    } else if (this.word === this.displayWord) {
+      return true
+    } else {
+      return false
+    }
+  }
 
-  // implement the getWinOrLoss function:
-  // getWinOrLoss() {}
+  getWinOrLoss() {
+    if (this.word === this.displayWord && this.remainingGuesses > 0) {
+      return 'win'
+    } else if (this.word !== this.displayWord && this.remainingGuesses <= 0) {
+      return 'loss'
+    } else {
+    return null
+    }
+  }
 }
 
 function newGame() {
